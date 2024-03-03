@@ -1,44 +1,46 @@
 <script>
-	import { providers } from './../../stores.ts';
-	import { onMount, } from 'svelte';
-	import { GenericRepo } from './../../repo/GenericRepo.ts';
+	import { isLoading, providers } from './../../stores';
+	import { onMount } from 'svelte';
+	import { GenericRepo } from './../../repo/GenericRepo';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import { Api } from '../../utils/Api';
 	import Master from '../../layouts/Master.svelte';
 	import { writable } from 'svelte/store';
-
-let showModal = writable(false);
-// let showModal = writable(false);
+	let showModal = writable(false);
+	let repo = new GenericRepo();
+	// let showModal = writable(false);
 
 	export let editingId = null;
-	
+
+
 	let formState = {
-	  id: '',
-	  name: '',
-	  // include other fields
+		id: '',
+		name: '',
+		code: ''
+		// include other fields
 	};
 
-  
+
 	// Reactive statement for editing logic
 	$: if (editingId) {
-	  const itemToEdit = $providers.find(item => item.id === editingId);
-	  if (itemToEdit) {
-		formState = { ...itemToEdit };
-	  }
+		const itemToEdit = $providers.find(item => item.id === editingId);
+		if (itemToEdit) {
+			formState = { ...itemToEdit };
+		}
 	}
-  
+
 	// Load providers list
 	function load() {
-	  let repo = new GenericRepo();
-	  repo.list(Api.PROVIDERS, null, (list) => {
-		providers.set(list); // Using `set` to update the Svelte store directly
-	  }, (message) => {
-		alert(message);
-	  });
+
+		repo.list(Api.PROVIDERS, null, (list) => {
+			providers.set(list); // Using `set` to update the Svelte store directly
+		}, (message) => {
+			alert(message);
+		});
 	}
-  
+
 	onMount(load);
-  
+
 	// Handle form submission
 	// function handleSubmit() {
 	//   if (editingId) {
@@ -52,69 +54,109 @@ let showModal = writable(false);
 	//   formState = { name: '', /* reset other fields */ };
 	//   editingId = null;
 	// }
-  
+
 	// Function to delete a provider
-function openModal(provider) {
-    // editingProvider.set(provider);
-    showModal.set(true);
-  }
+	function openModal(provider) {
+		formState.id = provider.id;
+		formState.name = provider.name;
+		formState.code = provider.code;
+		showModal.set(true);
+	}
 
-  function deleteProvider(id) {
-    providers.update(all => all.filter(p => p.id !== id));
-  }
+	function closeModal() {
+		showModal.set(false);
+	}
 
-  function handleSubmit() {
-    // Logic to handle submission and update the providers store
-    // $('#editProviderModal').modal('hide');
-  }
-  </script>
-  
-  <Master>
+
+	function deleteProvider(id) {
+		repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
+			load()
+			 isLoading.set(false);
+		}, (message) => {
+			alert(message);
+			 isLoading.set(false);
+		});
+	}
+
+	function  save(){
+		 isLoading.set(true);
+		if(formState.id !=null){
+			repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
+				load();
+				 isLoading.set(false);
+			}, (message) => {
+				alert(message);
+				 isLoading.set(false);
+			});
+		}else{
+			repo.store(`${Api.PROVIDERS}`, formState, (data) => {
+				closeModal()
+				load()
+				 isLoading.set(false);
+			}, (message) => {
+				alert(message);
+				 isLoading.set(false);
+			});
+		}
+
+	}
+	function create() {
+		openModal({  });
+	}
+</script>
+
+<Master>
 	<div class="container">
-	  <div class="row">
-		{#each $providers as provider (provider.id)}
-		  <div class="provider-item">
-			<p>{provider.name}</p>
-			<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
-			<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
-		  
-			<button on:click={() => editingId = provider.id}>Edit</button>
-			<button on:click={() => deleteProvider(provider.id)}>Delete</button>
-		  </div>
-		{/each}
-	  </div>
-	</div> 
-	
-	<!-- Modal -->
-	<div class={ $showModal ? 'modal fade show d-block' : 'modal fade' } id="editProviderModal" tabindex="-1" role="dialog" aria-labelledby="editProviderModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
-			</div>
-			<div class="modal-body">
-			  <form on:submit|preventDefault={handleSubmit}>
-				<div class="form-group">
-				  <label for="providerId">ID</label>
-				  <input type="text" class="form-control" id="providerId" bind:value={formState.id} readonly>
-				</div>
-				<div class="form-group">
-				  <label for="providerName">Name</label>
-				  <input type="text" class="form-control" id="providerName" bind:value={formState.name}>
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				  <button type="submit" class="btn btn-primary">Save changes</button>
-				</div>
-			  </form>
-			</div>
-		  </div>
-		</div>
-	  </div>
+		<div class="row">
+			<button on:click={() => create()}>Create</button>
+			{#each $providers as provider (provider.id)}
+				<div class="provider-item">
+					<p>{provider.name}</p>
+					<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
+					<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
 
-	  <div class={ $showModal ? 'modal-backdrop fade show' : '' }></div>
-  </Master>
-  
+					<button on:click={() => editingId = provider.id}>Edit</button>
+					<button on:click={() => deleteProvider(provider.id)}>Delete</button>
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class={ $showModal ? 'modal fade show d-block' : 'modal fade' } id="editProviderModal" tabindex="-1"
+			 role="dialog" aria-labelledby="editProviderModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form on:submit|preventDefault={save}>
+						<div class="form-group">
+							<label for="providerName">Name</label>
+							<input type="text" class="form-control" id="providerName" bind:value={formState.name}>
+						</div>
+						<div class="form-group">
+							<label for="providerCode">Code</label>
+							<input type="text" class="form-control" id="providerCode" bind:value={formState.code}>
+						</div>
+						<div class="modal-footer">
+							{#if $isLoading}
+								<p>Loading..</p>
+							{:else}
+								<button on:click={()=>closeModal()} type="button" class="btn btn-secondary" data-dismiss="modal">Close
+								</button>
+								<button on:click={()=>save()} type="submit" class="btn btn-primary">Save</button>
+							{/if}
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class={ $showModal ? 'modal-backdrop fade show' : '' }></div>
+</Master>
