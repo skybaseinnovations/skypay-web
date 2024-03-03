@@ -5,6 +5,9 @@
     import { isLoading } from '../stores';
     import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
     import { onMount } from 'svelte';
+    import 'bootstrap/dist/css/bootstrap.min.css';
+    import '/src/styles/global.css';
+
     var mounted = false;
     onMount(async()=>{
       mounted = true
@@ -34,6 +37,7 @@
         height="{32}"
         width="{32}"
       /></div>
+    <!--{/if}-->
     {/if}
   </div>
   

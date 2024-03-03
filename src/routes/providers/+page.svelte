@@ -1,5 +1,4 @@
 <script>
-	import 'bootstrap/dist/css/bootstrap.min.css';
 	import { isLoading, providers } from './../../stores';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
