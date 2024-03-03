@@ -1,17 +1,18 @@
 <script>
+	import 'bootstrap/dist/css/bootstrap.min.css';
 	import { isLoading, providers } from './../../stores';
 	import { onMount } from 'svelte';
-	import { GenericRepo } from './../../repo/GenericRepo';
-	import 'bootstrap/dist/css/bootstrap.min.css';
-	import { Api } from '../../utils/Api';
-	import Master from '../../layouts/Master.svelte';
 	import { writable } from 'svelte/store';
+
+	import { GenericRepo } from './../../repo/GenericRepo';
+	import { Api } from '../../utils/Api';
+
+	import Master from '../../layouts/Master.svelte';
+
+
 	let showModal = writable(false);
 	let repo = new GenericRepo();
-	// let showModal = writable(false);
-
 	export let editingId = null;
-
 
 	let formState = {
 		id: '',
@@ -82,6 +83,7 @@
 		 isLoading.set(true);
 		if(formState.id !=null){
 			repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
+				closeModal()
 				load();
 				 isLoading.set(false);
 			}, (message) => {
@@ -110,13 +112,12 @@
 		<div class="row">
 			<button on:click={() => create()}>Create</button>
 			{#each $providers as provider (provider.id)}
-				<div class="provider-item">
-					<p>{provider.name}</p>
-					<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
-					<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
-
-					<button on:click={() => editingId = provider.id}>Edit</button>
-					<button on:click={() => deleteProvider(provider.id)}>Delete</button>
+				<div class="col-md-3 card p-2">
+					<div class="provider-item">
+						<p>{provider.name}</p>
+						<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
+						<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
+					</div>
 				</div>
 			{/each}
 		</div>
