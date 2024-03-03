@@ -2,11 +2,11 @@
 /*    background-color: rebeccapurple !important;*/
 
 /*}*/
-:root {
-}
+
 
 .card{
-    background-color: hotpink;
+    background-color: #F8F8F8;
+    border: none;
 }
 
 

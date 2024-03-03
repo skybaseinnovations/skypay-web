@@ -136,11 +136,16 @@
 		<div class="row">
 			<button on:click={() => create()}>Create</button>
 			{#each $providers as provider (provider.id)}
-				<div class="col-md-3 card p-2">
-					<div class="provider-item">
-						<p>{provider.name}</p>
-						<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
-						<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
+				<div class="col-md-3 ">
+					<div class="card p-3 mt-2">
+						<div class="provider-item ">
+							<div class="d-flex flex-column gap-1 justify-content-center align-items-center">
+								<img src="" height="80" width="80" class="object-fit-contain">
+								<p>{provider.name}</p>
+							</div>
+							<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
+							<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
+						</div>
 					</div>
 				</div>
 			{/each}
