@@ -9,15 +9,27 @@
 
 	import Master from '../../layouts/Master.svelte';
 	import { quintOut } from 'svelte/easing';
+	import Swal from 'sweetalert2';
 
 	let showModal = writable(false);
 	let repo = new GenericRepo();
 	export let editingId = null;
 
 	let formState = {
-		id: '',
-		name: '',
-		code: ''
+		id: "",
+		code: "",
+		name: "",
+		status: false,
+		description: "",
+		website_url: "",
+		documentation_url: "",
+		support_email: "",
+		region: "",
+		integration_difficulty: "Medium", // Default selection
+		signup_url: "",
+		api_version: "",
+		rating: null,
+		featured: false
 		// include other fields
 	};
 
@@ -26,7 +38,8 @@
 	$: if (editingId) {
 		const itemToEdit = $providers.find(item => item.id === editingId);
 		if (itemToEdit) {
-			formState = { ...itemToEdit };
+			// formState = null;
+			formState = itemToEdit;
 		}
 	}
 
@@ -34,7 +47,7 @@
 	function load() {
 
 		repo.list(Api.PROVIDERS, null, (list) => {
-			providers.set(list); // Using `set` to update the Svelte store directly
+			providers.set(list);
 		}, (message) => {
 			alert(message);
 		});
@@ -58,9 +71,7 @@
 
 	// Function to delete a provider
 	function openModal(provider) {
-		formState.id = provider.id;
-		formState.name = provider.name;
-		formState.code = provider.code;
+		formState = provider;
 		showModal.set(true);
 	}
 
@@ -70,12 +81,24 @@
 
 
 	function deleteProvider(id) {
-		repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
-			load();
-			isLoading.set(false);
-		}, (message) => {
-			alert(message);
-			isLoading.set(false);
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#1ec677",
+			cancelButtonColor: "#b42222",
+			confirmButtonText: "Yes, delete it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
+					load();
+					isLoading.set(false);
+				}, (message) => {
+					alert(message);
+					isLoading.set(false);
+				});
+			}
 		});
 	}
 
@@ -162,12 +185,44 @@
 					<div class="modal-body">
 						<form on:submit|preventDefault={save}>
 							<div class="form-group">
-								<label for="providerName">Name</label>
-								<input type="text" class="form-control" id="providerName" bind:value={formState.name}>
+								<label for="code">Code</label>
+								<input type="text" class="form-control" id="code" bind:value={formState.code}>
 							</div>
+
 							<div class="form-group">
-								<label for="providerCode">Code</label>
-								<input type="text" class="form-control" id="providerCode" bind:value={formState.code}>
+								<label for="name">Name</label>
+								<input type="text" class="form-control" id="name" bind:value={formState.name}>
+							</div>
+
+							<div class="form-group">
+								<label for="status">Status</label>
+								<div class="custom-control custom-switch">
+									{formState.status}
+									<input type="checkbox" class="custom-control-input" id="status" bind:checked={formState.status}>
+									<label class="custom-control-label" for="status">Active</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="description">Description</label>
+								<textarea class="form-control" id="description" bind:value={formState.description}></textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="integrationDifficulty">Integration Difficulty</label>
+								<select class="form-control" id="integrationDifficulty" bind:value={formState.integration_difficulty}>
+									<option>Easy</option>
+									<option>Medium</option>
+									<option>Hard</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="featured">Featured</label>
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="featured" bind:checked={formState.featured}>
+									<label class="custom-control-label" for="featured">Yes</label>
+								</div>
 							</div>
 							<div class="modal-footer">
 								{#if $isLoading}

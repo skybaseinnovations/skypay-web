@@ -7,7 +7,6 @@
     import { onMount } from 'svelte';
     import 'bootstrap/dist/css/bootstrap.min.css';
     import '/src/styles/global.css';
-
     var mounted = false;
     onMount(async()=>{
       mounted = true
