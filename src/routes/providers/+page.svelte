@@ -110,18 +110,34 @@
 
 <Master>
 	<div class="container">
+		<div class="d-flex justify-content-between align-items-center pt-4 pb-3">
+			<div>
+				<h6 class="m-0">Providers</h6>
+				<p class="m-0 text-muted">ghjh</p>
+			</div>
+			<div>
+				<button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" on:click={() => create()}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Create</button>
+			</div>
+		</div>
+
 		<div class="row">
-			<button on:click={() => create()}>Create</button>
+
 			{#each $providers as provider (provider.id)}
-				<div class="col-md-3 ">
-					<div class="card p-3 mt-2">
-						<div class="provider-item ">
+				<div class="col-md-2 ">
+					<div class="card p-2 mt-2 position-relative">
+						<div class="d-flex flex-column gap-2 align-items-end justify-content-end" style="position: absolute;right: 0.5rem;">
+							<button class="border-0 text-primary bg-transparent d-flex align-items-center justify-content-center p-0" on:click={() => openModal(provider)}>
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+							</button>
+							<button class="border-0 text-danger bg-transparent d-flex align-items-center justify-content-center p-0" on:click={() => deleteProvider(provider.id)}>
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</button>
+						</div>
+						<div class="provider-item pt-4">
 							<div class="d-flex flex-column gap-1 justify-content-center align-items-center">
-								<img src="" height="80" width="80" class="object-fit-contain">
-								<p>{provider.name}</p>
+								<img src="" height="80" width="80" class="object-fit-contain" alt="">
+								<h6>{provider.name}</h6>
 							</div>
-							<button class="btn btn-primary" on:click={() => openModal(provider)}>Edit</button>
-							<button class="btn btn-danger" on:click={() => deleteProvider(provider.id)}>Delete</button>
 						</div>
 					</div>
 				</div>

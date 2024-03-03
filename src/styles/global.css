@@ -3,9 +3,12 @@
 
 /*}*/
 
-
-.card{
+body {
     background-color: #F8F8F8;
+}
+
+.card {
+    background: #ffffff;
     border: none;
 }
 
