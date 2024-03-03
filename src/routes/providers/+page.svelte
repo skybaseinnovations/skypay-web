@@ -9,6 +9,7 @@
 
 	import Master from '../../layouts/Master.svelte';
 	import { quintOut } from 'svelte/easing';
+	import Swal from 'sweetalert2';
 
 	let showModal = writable(false);
 	let repo = new GenericRepo();
@@ -34,7 +35,7 @@
 	function load() {
 
 		repo.list(Api.PROVIDERS, null, (list) => {
-			providers.set(list); // Using `set` to update the Svelte store directly
+			providers.set(list);
 		}, (message) => {
 			alert(message);
 		});
@@ -70,12 +71,24 @@
 
 
 	function deleteProvider(id) {
-		repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
-			load();
-			isLoading.set(false);
-		}, (message) => {
-			alert(message);
-			isLoading.set(false);
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#c61e2c",
+			cancelButtonColor: "#a1a1a1",
+			confirmButtonText: "Yes, delete it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
+					load();
+					isLoading.set(false);
+				}, (message) => {
+					alert(message);
+					isLoading.set(false);
+				});
+			}
 		});
 	}
 
