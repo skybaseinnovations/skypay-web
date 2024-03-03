@@ -2,10 +2,22 @@
 	import { onMount } from 'svelte';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import { AuthRepo } from '../../repo/AuthRepo';
-	import { user } from '../../stores';
+	import { user, isLoading } from '../../stores';
+	import { goto } from '$app/navigation';
 
 	let email = '';
 	let password = '';
+
+	onMount(()=>{
+		isLoading.set(true)
+		const storedUser = localStorage.getItem('user');
+		const storedToken = localStorage.getItem('token');
+		if(storedUser && storedToken){
+			isLoading.set(false)
+			goto('/home');
+		}
+
+	})
 
 	function signin(){
 		let authRepo = new AuthRepo();

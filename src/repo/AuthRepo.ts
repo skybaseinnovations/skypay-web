@@ -32,4 +32,17 @@ export class AuthRepo {
 			failed(error.message); // Invoke the failed callback with the error message
 		}
 	}
+
+	async logout(success: () => void, failed: (message: string) => void) {
+		try {
+
+				localStorage.removeItem('user');
+				localStorage.removeItem('token');
+				user.set(null);
+				token.set(null);
+				success();
+		} catch (error: any) {
+			failed(error.message); // Invoke the failed callback with the error message
+		}
+	}
 }
