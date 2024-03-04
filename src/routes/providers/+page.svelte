@@ -176,10 +176,10 @@
 				 role="dialog" aria-labelledby="editProviderModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header position-relative">
 						<h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
+						<button type="button" class="close position-absolute border-0 top-50 end-0 translate-middle" data-dismiss="modal" aria-label="Close" style="padding-bottom: 0.2rem">
+							  <span aria-hidden="true" class="m-0" ><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
 						</button>
 					</div>
 					<div class="modal-body">
@@ -219,8 +219,8 @@
 
 							<div class="form-group">
 								<label for="featured">Featured</label>
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="featured" bind:checked={formState.featured}>
+								<div class="form-check form-switch d-flex align-items-center gap-2">
+									<input type="checkbox" class="form-check-input" role="switch" id="featured" bind:checked={formState.featured}>
 									<label class="custom-control-label" for="featured">Yes</label>
 								</div>
 							</div>
