@@ -31,7 +31,7 @@
 
 	<Footer />
 	{#if mounted}
-		<!--{#if $isLoading}-->
+		{#if $isLoading}
 		<div class="loading-box">
 			<LottiePlayer
 				src="loading.json"
@@ -40,11 +40,12 @@
 				controls="{false}"
 				renderer="svg"
 				background="transparent"
-				height="{32}"
-				width="{32}"
+				height="{64}"
+				width="{64}"
 			/>
+			<p class="text-dark">Loading</p>
 		</div>
-		<!--{/if}-->
+		{/if}
 	{/if}
 </div>
 
@@ -61,14 +62,17 @@
     }
 
     .loading-box {
-        position: fixed; /* Stick it on top right, no matter where you scroll */
-        top: 0;
-        right: 0;
+        position: absolute;
         background-color: rgba(255, 255, 255);
         color: white; /* White text */
-        padding: 8px 16px; /* Some padding */
-        border-radius: 0 0 0 5px; /* Rounded bottom-left corner */
+        padding: 16px 16px; /* Some padding */
+        border-radius: 0 0 0 8px; /* Rounded bottom-left corner */
         font-size: 14px; /* Small and cute font size */
-        z-index: 1000; /* Make sure it's above other content */
+        z-index: 9999999; /* Make sure it's above other content */
+
+        /* Centering */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>

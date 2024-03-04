@@ -21,7 +21,7 @@
 	function signin(){
 		let authRepo = new AuthRepo();
 		authRepo.login(email, password, function(userData) {
-			alert("OK")
+			goto('home', {replaceState: true})
 		}, function(message) {
 			alert(message); // Show error message
 		});

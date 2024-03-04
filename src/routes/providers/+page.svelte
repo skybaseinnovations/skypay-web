@@ -45,11 +45,13 @@
 
 	// Load providers list
 	function load() {
-
+		isLoading.set(true)
 		repo.list(Api.PROVIDERS, null, (list) => {
 			providers.set(list);
+			isLoading.set(false)
 		}, (message) => {
 			alert(message);
+			isLoading.set(false)
 		});
 	}
 
