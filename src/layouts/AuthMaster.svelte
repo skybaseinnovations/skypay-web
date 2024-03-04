@@ -13,7 +13,7 @@
 
 <div class="site-container">
 
-	<div class="content container">
+	<div class="content">
 		<!-- Your page content goes here -->
 		<slot></slot>
 	</div>

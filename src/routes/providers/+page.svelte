@@ -170,7 +170,7 @@
 							<div class="d-flex flex-column gap-2 align-items-end justify-content-end"
 									 style="position: absolute;right: 0.5rem;">
 								<button
-									class="border-0 text-primary bg-transparent d-flex align-items-center justify-content-center p-0"
+									class="border-0 btn text-primary bg-transparent d-flex align-items-center justify-content-center p-0"
 									on:click={() => openModal(provider)}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 											 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -179,7 +179,7 @@
 										<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
 									</svg>
 								</button>
-								<button class="border-0 text-danger bg-transparent d-flex align-items-center justify-content-center p-0"
+								<button class="border-0 btn text-danger bg-transparent d-flex align-items-center justify-content-center p-0"
 												on:click={() => deleteProvider(provider.id)}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 											 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -212,7 +212,7 @@
 				 role="dialog" aria-labelledby="editProviderModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header position-relative">
+					<div class="modal-header position-relative justify-content-center pt-4">
 						<h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
 						<button on:click={()=>closeModal()} type="button" class="close position-absolute border-0 top-50 end-0 translate-middle"
 										data-dismiss="modal" aria-label="Close" style="padding-bottom: 0.2rem">
@@ -228,44 +228,52 @@
 					</div>
 					<div class="modal-body">
 						<form on:submit|preventDefault={save}>
-							<div class="form-group">
-								<label for="code">Code</label>
-								<input type="text" class="form-control" id="code" bind:value={formState.code}>
-							</div>
-
-							<div class="form-group">
-								<label for="name">Name</label>
-								<input type="text" class="form-control" id="name" bind:value={formState.name}>
-							</div>
-
-							<div class="form-group">
-								<label for="status">Status</label>
-								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="status" bind:checked={formState.status}>
-									<label class="custom-control-label" for="status">Active</label>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="code">Code</label>
+										<input type="text" class="form-control" id="code" bind:value={formState.code}>
+									</div>
 								</div>
-							</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="name">Name</label>
+										<input type="text" class="form-control" id="name" bind:value={formState.name}>
+									</div>
+								</div>
 
-							<div class="form-group">
-								<label for="description">Description</label>
-								<textarea class="form-control" id="description" bind:value={formState.description}></textarea>
-							</div>
-
-							<div class="form-group">
-								<label for="integrationDifficulty">Integration Difficulty</label>
-								<select class="form-control" id="integrationDifficulty" bind:value={formState.integration_difficulty}>
-									<option>Easy</option>
-									<option>Medium</option>
-									<option>Hard</option>
-								</select>
-							</div>
-
-							<div class="form-group">
-								<label for="featured">Featured</label>
-								<div class="form-check form-switch d-flex align-items-center gap-2">
-									<input type="checkbox" class="form-check-input" role="switch" id="featured"
-												 bind:checked={formState.featured}>
-									<label class="custom-control-label" for="featured">Yes</label>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="description">Description</label>
+										<textarea class="form-control" id="description" bind:value={formState.description}></textarea>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="integrationDifficulty">Integration Difficulty</label>
+										<select class="form-control" id="integrationDifficulty" bind:value={formState.integration_difficulty}>
+											<option>Easy</option>
+											<option>Medium</option>
+											<option>Hard</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-auto">
+									<div class="form-group">
+										<div class="form-check form-switch d-flex align-items-center gap-2">
+											<input type="checkbox" class="form-check-input" role="switch" id="status" bind:checked={formState.status}>
+											<label class="custom-control-label" for="status">Active</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-auto">
+									<div class="form-group">
+										<div class="form-check form-switch d-flex align-items-center gap-2">
+											<input type="checkbox" class="form-check-input" role="switch" id="featured"
+														 bind:checked={formState.featured}>
+											<label class="custom-control-label" for="featured">Featured</label>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
