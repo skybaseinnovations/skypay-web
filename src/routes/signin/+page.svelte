@@ -5,6 +5,7 @@
 	import { user, isLoading, token } from '../../stores';
 	import { goto } from '$app/navigation';
 	import AuthMaster from '../../layouts/AuthMaster.svelte';
+	import Swal from 'sweetalert2';
 
 	export let data;
 	let email = 'user1@test.test';
@@ -29,7 +30,11 @@
 			goto('home', { replaceState: true });
 		}, function(message) {
 			isLoading.set(false);
-			alert(message); // Show error message
+			Swal.fire({
+				icon: "error",
+				title: "Oops...",
+				text: message,
+			});
 		});
 	}
 </script>

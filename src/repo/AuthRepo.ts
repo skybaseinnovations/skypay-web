@@ -27,7 +27,7 @@ export class AuthRepo {
 				await this.authenticate(data.data.user, data.data.token)
 				success(data.data.user);
 			} else {
-				failed(data.message || 'Something went wrong during signin'); // You might want to adjust based on your API's error handling
+				failed(data.message || 'Something went wrong'); // You might want to adjust based on your API's error handling
 			}
 		} catch (error: any) {
 			failed(error.message); // Invoke the failed callback with the error message
