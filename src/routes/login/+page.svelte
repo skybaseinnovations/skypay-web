@@ -2,28 +2,26 @@
 	import { onMount } from 'svelte';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import { AuthRepo } from '../../repo/AuthRepo';
-	import { user, isLoading } from '../../stores';
+	import { user, isLoading, token } from '../../stores';
 	import { goto } from '$app/navigation';
-
-	let email = '';
-	let password = '';
-
+	export let data;
+	let email = 'user1@test.test';
+	let password = '12345678';
+	let dataX ={} ;
 	onMount(()=>{
 		isLoading.set(true)
 		const storedUser = localStorage.getItem('user');
 		const storedToken = localStorage.getItem('token');
 		if(storedUser && storedToken){
 			isLoading.set(false)
-			goto('/home');
+			// goto('/home');
 		}
-
 	})
 
 	function signin(){
 		let authRepo = new AuthRepo();
-		authRepo.login(email, password, function(user) {
-			// Close modal programmatically if needed, or navigate to another page
-			alert(`Welcome, ${user.name}!`); // Welcome message
+		authRepo.login(email, password, function(userData) {
+			alert("OK")
 		}, function(message) {
 			alert(message); // Show error message
 		});
@@ -34,6 +32,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+				{data}
 				<h5 class="modal-title" id="exampleModalLabel">Login</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>

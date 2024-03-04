@@ -18,7 +18,7 @@
       if (result.isConfirmed) {
         let repo = new AuthRepo();
         repo.logout(()=>{
-          goto('/login')
+          goto('/logout')
         }, (message)=>{
           alert(message)
         })

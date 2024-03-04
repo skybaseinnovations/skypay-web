@@ -6,7 +6,8 @@
 	import { onMount } from 'svelte';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import '/src/styles/global.css';
-	import { user, token,isLoading } from '../stores';
+	import { user, token, isLoading } from '../stores';
+	import { goto } from '$app/navigation';
 
 	var mounted = false;
 	onMount(async () => {
