@@ -214,7 +214,7 @@
 				<div class="modal-content">
 					<div class="modal-header position-relative">
 						<h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
-						<button type="button" class="close position-absolute border-0 top-50 end-0 translate-middle"
+						<button on:click={()=>closeModal()} type="button" class="close position-absolute border-0 top-50 end-0 translate-middle"
 										data-dismiss="modal" aria-label="Close" style="padding-bottom: 0.2rem">
 							<span aria-hidden="true" class="m-0"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 																												viewBox="0 0 24 24" fill="none" stroke="currentColor"
