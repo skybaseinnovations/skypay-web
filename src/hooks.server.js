@@ -37,7 +37,7 @@ export async function handle({ event, resolve }) {
 	if (!token && !user) {
 		if (!publicLinks.includes(event.url.pathname)) {
 			// Not on the list? That's a no-entry. Redirect to signin.
-			return redirect(303, '/signin');
+			// return redirect(303, '/signin');
 		}
 
 	}
