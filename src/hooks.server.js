@@ -14,7 +14,7 @@ export async function handle({ event, resolve }) {
 	}
 
 	// Your VIP list: Protected links that should not be redirected
-	const publicLinks = ['/api/authenticate','/login'];
+	const publicLinks = ['/api/authenticate','/signin'];
 
 	// Example condition: if you want to delete cookies under certain conditions
 	if (event.url.pathname.endsWith('logout')) {
@@ -30,15 +30,14 @@ export async function handle({ event, resolve }) {
 			secure: true, // Ensures the cookie is sent over HTTPS
 			sameSite: 'Strict', // Additional security for cookie transmission
 		});
-		throw redirect(303, '/login');
+		throw redirect(303, '/signin');
 	}
 
 	// Check if both token and user are not set
 	if (!token && !user) {
 		if (!publicLinks.includes(event.url.pathname)) {
-			console.log(event.url.pathname);
-			// Not on the list? That's a no-entry. Redirect to login.
-			return redirect(303, '/login');
+			// Not on the list? That's a no-entry. Redirect to signin.
+			return redirect(303, '/signin');
 		}
 
 	}

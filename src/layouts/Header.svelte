@@ -38,7 +38,7 @@
       <li>Welcome, {$user?.name}!</li>
       <li><a href="#" on:click="{()=>logout()}">Logout</a></li>
     {:else}
-      <li><a href="/login">Login</a></li>
+      <li><a href="/signin">Login</a></li>
     {/if}
   </ul>
 </nav>

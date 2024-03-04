@@ -1,0 +1,66 @@
+<script>
+	// Import your header and footer components
+	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
+	import { onMount } from 'svelte';
+	import 'bootstrap/dist/css/bootstrap.min.css';
+	import '/src/styles/global.css';
+	import { user, token, isLoading } from '../stores';
+	var mounted = false;
+	onMount(async () => {
+		mounted = true;
+	});
+</script>
+
+<div class="site-container">
+
+	<div class="content container">
+		<!-- Your page content goes here -->
+		<slot></slot>
+	</div>
+
+	{#if mounted}
+		{#if $isLoading}
+		<div class="loading-box">
+			<LottiePlayer
+				src="loading.json"
+				autoplay="{true}"
+				loop="{true}"
+				controls="{false}"
+				renderer="svg"
+				background="transparent"
+				height="{64}"
+				width="{64}"
+			/>
+			<p class="text-dark">Loading</p>
+		</div>
+		{/if}
+	{/if}
+</div>
+
+<style>
+    .site-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .content {
+        flex: 1;
+        /* Ensure content takes up the available space, pushing the footer down */
+    }
+
+    .loading-box {
+        position: absolute;
+        background-color: rgba(255, 255, 255);
+        color: white; /* White text */
+        padding: 16px 16px; /* Some padding */
+        border-radius: 0 0 0 8px; /* Rounded bottom-left corner */
+        font-size: 14px; /* Small and cute font size */
+        z-index: 9999999; /* Make sure it's above other content */
+
+        /* Centering */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
