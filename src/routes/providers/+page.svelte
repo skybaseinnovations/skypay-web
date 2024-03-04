@@ -157,7 +157,7 @@
 
 		<div class="row">
 
-			{#if $providers.length === 0}
+			{#if !$isLoading && $providers.length === 0}
 				<div class="text-center d-flex justify-content-center align-items-center flex-column">
 					<img style="height: 25vh" src="illustrations/error.svg"/>
 					<h6 class="mt-3">Oops!</h6>
