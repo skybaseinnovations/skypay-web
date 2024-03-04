@@ -20,19 +20,19 @@
 
 	{#if mounted}
 		{#if $isLoading}
-		<div class="loading-box">
-			<LottiePlayer
-				src="loading.json"
-				autoplay="{true}"
-				loop="{true}"
-				controls="{false}"
-				renderer="svg"
-				background="transparent"
-				height="{64}"
-				width="{64}"
-			/>
-			<p class="text-dark">Loading</p>
-		</div>
+			<div class="loading-box">
+				<LottiePlayer
+					src="loading.json"
+					autoplay="{true}"
+					loop="{true}"
+					controls="{false}"
+					renderer="svg"
+					background="transparent"
+					height="{64}"
+					width="{64}"
+				/>
+				<p class="text-dark text-center m-0">Loading</p>
+			</div>
 		{/if}
 	{/if}
 </div>
@@ -49,18 +49,4 @@
         /* Ensure content takes up the available space, pushing the footer down */
     }
 
-    .loading-box {
-        position: absolute;
-        background-color: rgba(255, 255, 255);
-        color: white; /* White text */
-        padding: 16px 16px; /* Some padding */
-        border-radius: 0 0 0 8px; /* Rounded bottom-left corner */
-        font-size: 14px; /* Small and cute font size */
-        z-index: 9999999; /* Make sure it's above other content */
-
-        /* Centering */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
 </style>

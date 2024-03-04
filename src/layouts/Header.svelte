@@ -29,7 +29,9 @@
 
 <nav class="header">
   <div class="logo">
-    <a href="/">SKYPAY</a>
+    <a href="/">
+      <img class="logo" src="/logo.svg" alt="">
+    </a>
   </div>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
@@ -48,12 +50,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #333;
-    color: #fff;
+    padding: 0.8rem 2rem;
+    background-color: #ffffff;
+  }
+  .logo{
+    height: 3rem;
   }
   .logo a {
-    color: #fff;
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -66,11 +69,10 @@
     margin-left: 20px;
   }
   .nav-links li a {
-    color: #fff;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
   }
   .nav-links li a:hover {
-    color: #ddd;
+    color: var(--primary-color);
   }
 </style>
