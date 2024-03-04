@@ -241,7 +241,6 @@
 							<div class="form-group">
 								<label for="status">Status</label>
 								<div class="custom-control custom-switch">
-									{formState.status}
 									<input type="checkbox" class="custom-control-input" id="status" bind:checked={formState.status}>
 									<label class="custom-control-label" for="status">Active</label>
 								</div>
