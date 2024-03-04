@@ -8,13 +8,16 @@ body {
     background-color: #F8F8F8;
     font-family: "Outfit", sans-serif;
 }
-.row{
+
+.row {
     margin: 0;
 }
-a{
+
+a {
     color: inherit;
     text-decoration: none;
 }
+
 .card {
     background: #ffffff;
     border: none;
@@ -29,11 +32,13 @@ a{
     background: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background: transparent;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
+
 .btn-secondary, .swal2-cancel, .btn-secondary:hover, .swal2-cancel:hover, .btn-secondary:active, .swal2-cancel:active {
     background: transparent !important;
     border-color: transparent !important;
@@ -55,7 +60,8 @@ a{
 .form-group {
     margin: 0 0 0.2rem 0;
 }
-.links{
+
+.links {
     color: var(--primary-color);
 }
 
@@ -84,9 +90,11 @@ label {
     box-shadow: none;
     border: 1.4px solid var(--primary-color);
 }
-.form-label{
-   margin-bottom: 0.2rem;
+
+.form-label {
+    margin-bottom: 0.2rem;
 }
+
 .form-check-input:focus, button:focus {
     box-shadow: none !important;
 }
@@ -103,17 +111,21 @@ input[type="checkbox"] {
 .h-full {
     height: 100vh;
 }
-.form{
+
+.form {
     min-width: 450px;
 }
-.form p,p{
+
+.form p, p {
     font-size: 0.9rem;
 }
-.text-danger{
+
+.text-danger {
     font-size: 0.8rem;
 }
-@media screen and (max-width:560px){
-    .form{
+
+@media screen and (max-width: 560px) {
+    .form {
         min-width: 100%;
     }
 }
