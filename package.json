@@ -33,6 +33,7 @@
 	"dependencies": {
 		"@lottiefiles/svelte-lottie-player": "^0.3.1",
 		"bootstrap": "^5.3.2",
-		"sweetalert2": "^11.10.5"
+		"sweetalert2": "^11.10.5",
+		"toastr": "^2.1.4"
 	}
 }
