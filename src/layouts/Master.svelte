@@ -32,6 +32,7 @@
 	<Footer />
 	{#if mounted}
 		{#if $isLoading}
+			<div class="loading-overlay"></div>
 		<div class="loading-box">
 			<LottiePlayer
 				src="loading.json"

@@ -10,6 +10,10 @@
 	import Master from '../../layouts/Master.svelte';
 	import { quintOut } from 'svelte/easing';
 	import Swal from 'sweetalert2';
+	import SkyTextInput from '../../components/SkyTextInput.svelte';
+	import { Snackbarrgh } from '../../utils/Snackbarrgh.js';
+	import SkySelect from '../../components/SkySelect.svelte';
+	import SkySwitch from '../../components/SkySwitch.svelte';
 
 	let showModal = writable(false);
 	let repo = new GenericRepo();
@@ -32,7 +36,7 @@
 		featured: false
 		// include other fields
 	};
-
+	let errors = {};
 
 	// Reactive statement for editing logic
 	$: if (editingId) {
@@ -112,8 +116,9 @@
 				closeModal();
 				load();
 				isLoading.set(false);
-			}, (message) => {
-				alert(message);
+			}, (message, e) => {
+				errors = e;
+				Snackbarrgh.error(message);
 				isLoading.set(false);
 			});
 		} else {
@@ -121,8 +126,9 @@
 				closeModal();
 				load();
 				isLoading.set(false);
-			}, (message) => {
-				alert(message);
+			}, (message, e) => {
+				errors = e;
+				Snackbarrgh.error(message);
 				isLoading.set(false);
 			});
 		}
@@ -228,52 +234,29 @@
 					</div>
 					<div class="modal-body">
 						<form on:submit|preventDefault={save}>
-							<div class="row">
+							<div class="row py-3">
 								<div class="col-md-6">
-									<div class="form-group">
-										<label for="code">Code</label>
-										<input type="text" class="form-control" id="code" bind:value={formState.code}>
-									</div>
+									<SkyTextInput placeholder="e.g. SKY" label="Code" id="code" bind:value={formState.code}
+																errors={errors.code} type="text" />
 								</div>
 								<div class="col-md-6">
-									<div class="form-group">
-										<label for="name">Name</label>
-										<input type="text" class="form-control" id="name" bind:value={formState.name}>
-									</div>
+									<SkyTextInput placeholder="e.g. Sky Pay" label="Name" id="name" bind:value={formState.name}
+																errors={errors.name} type="text" />
 								</div>
 
 								<div class="col-md-12">
-									<div class="form-group">
-										<label for="description">Description</label>
-										<textarea class="form-control" id="description" bind:value={formState.description}></textarea>
-									</div>
+									<SkyTextInput label="Description" id="description" bind:value={formState.description}
+																errors={errors.description} type="textarea" />
 								</div>
 								<div class="col-md-12">
-									<div class="form-group">
-										<label for="integrationDifficulty">Integration Difficulty</label>
-										<select class="form-control" id="integrationDifficulty" bind:value={formState.integration_difficulty}>
-											<option>Easy</option>
-											<option>Medium</option>
-											<option>Hard</option>
-										</select>
-									</div>
+									<SkySelect placeholder="None" label="Integration Difficulty" id="integrationDifficulty" bind:value={formState.integration_difficulty}
+														 options={["Easy","Medium", "Hard"]} errors={errors.integration_difficulty} />
 								</div>
 								<div class="col-md-auto">
-									<div class="form-group">
-										<div class="form-check form-switch d-flex align-items-center gap-2">
-											<input type="checkbox" class="form-check-input" role="switch" id="status" bind:checked={formState.status}>
-											<label class="custom-control-label" for="status">Active</label>
-										</div>
-									</div>
+									<SkySwitch label="Active" id="active" bind:checked={formState.status} />
 								</div>
 								<div class="col-md-auto">
-									<div class="form-group">
-										<div class="form-check form-switch d-flex align-items-center gap-2">
-											<input type="checkbox" class="form-check-input" role="switch" id="featured"
-														 bind:checked={formState.featured}>
-											<label class="custom-control-label" for="featured">Featured</label>
-										</div>
-									</div>
+									<SkySwitch label="Featured" id="featured" bind:checked={formState.featured} />
 								</div>
 							</div>
 							<div class="modal-footer">

@@ -12,10 +12,6 @@ export class AuthRepo {
 				},
 				body: JSON.stringify({ email, password })
 			});
-
-			if (!response.ok) {
-				failed('Something went wrong!');
-			}
 			const data = await response.json();
 
 			if (data.status) {

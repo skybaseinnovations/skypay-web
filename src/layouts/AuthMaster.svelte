@@ -20,6 +20,7 @@
 
 	{#if mounted}
 		{#if $isLoading}
+			<div class="loading-overlay"></div>
 			<div class="loading-box">
 				<LottiePlayer
 					src="loading.json"
@@ -48,5 +49,4 @@
         flex: 1;
         /* Ensure content takes up the available space, pushing the footer down */
     }
-
 </style>

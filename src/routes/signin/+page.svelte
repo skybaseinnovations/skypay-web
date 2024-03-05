@@ -6,11 +6,14 @@
 	import { goto } from '$app/navigation';
 	import AuthMaster from '../../layouts/AuthMaster.svelte';
 	import Swal from 'sweetalert2';
+	import { Snackbarrgh } from '../../utils/Snackbarrgh.js';
+	import SkyTextInput from '../../components/SkyTextInput.svelte';
 
 	export let data;
 	let email = 'user1@test.test';
 	let password = '12345678';
-	let dataX = {};
+	let errors = {};
+
 	onMount(() => {
 		isLoading.set(true);
 		const storedUser = localStorage.getItem('user');
@@ -27,14 +30,11 @@
 		let authRepo = new AuthRepo();
 		authRepo.login(email, password, function(userData) {
 			isLoading.set(false);
-			goto('home', { replaceState: true });
+			Snackbarrgh.success(`Welcome back, ${userData.name}`)
+			goto('/', { replaceState: true });
 		}, function(message) {
 			isLoading.set(false);
-			Swal.fire({
-				icon: "error",
-				title: "Oops...",
-				text: message,
-			});
+			Snackbarrgh.error(message)
 		});
 	}
 </script>
@@ -53,14 +53,13 @@
 					<p class="text-muted">to your merchant account</p>
 				</div>
 				<form class="form" on:submit|preventDefault={signin}>
-					<div class="mb-3">
-						<label for="emailInput" class="form-label">Email address</label>
-						<input type="email" class="form-control" id="emailInput" bind:value={email} placeholder="name@example.com">
-					</div>
-					<div class="mb-3">
-						<label for="passwordInput" class="form-label">Password</label>
-						<input type="password" class="form-control" id="passwordInput" bind:value={password} placeholder="Password">
-					</div>
+					<SkyTextInput label="Email Address" id="email" bind:value={email}
+												errors={errors.email} type="email"
+												title="Please enter a valid email address." />
+
+					<SkyTextInput label="Password" id="password" bind:value={password}
+												errors={errors.password} type="password"
+												title="Password must be at least 8 characters." />
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary w-100">Sign In</button>
 					</div>

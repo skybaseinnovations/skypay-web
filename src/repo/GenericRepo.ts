@@ -24,7 +24,7 @@ export class GenericRepo {
 		}
 	}
 
-	async store(api: string, payload: any, success: (data: any) => void, failed: (message: string) => void) {
+	async store(api: string, payload: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
 
 			const response = await fetch(api, {
@@ -34,22 +34,19 @@ export class GenericRepo {
 				body: JSON.stringify(payload)
 			});
 
-			if (!response.ok) {
-				failed("Something went wrong!");
-			}
 			const data = await response.json();
 
 			if (data.status) {
 				success(data.data)
 			} else {
-				failed(data.message || 'Something went wrong'); // You might want to adjust based on your API's error handling
+				failed(data.message || 'Something went wrong',data.errors); // You might want to adjust based on your API's error handling
 			}
 		} catch (error: any) {
-			failed(error.message); // Invoke the failed callback with the error message
+			failed(error.message,{}); // Invoke the failed callback with the error message
 		}
 	}
 
-	async update(api: string, payload: any, success: (data: any) => void, failed: (message: string) => void) {
+	async update(api: string, payload: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
 
 			const response = await fetch(api, {
@@ -59,18 +56,15 @@ export class GenericRepo {
 				body: JSON.stringify(payload)
 			});
 
-			if (!response.ok) {
-				failed("Something went wrong!");
-			}
 			const data = await response.json();
 
 			if (data.status) {
 				success(data.data)
 			} else {
-				failed(data.message || 'Something went wrong'); // You might want to adjust based on your API's error handling
+				failed(data.message || 'Something went wrong',data.errors); // You might want to adjust based on your API's error handling
 			}
 		} catch (error: any) {
-			failed(error.message); // Invoke the failed callback with the error message
+			failed(error.message,{}); // Invoke the failed callback with the error message
 		}
 	}
 	async destroy(api: string, success: (message: string) => void, failed: (message: string) => void) {
