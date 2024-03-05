@@ -24,7 +24,7 @@
 <div class="site-container">
 	<Header />
 
-	<div class="content container">
+	<div class="content">
 		<!-- Your page content goes here -->
 		<slot></slot>
 	</div>
@@ -58,6 +58,7 @@
     }
 
     .content {
+        padding: 0 2rem;
         flex: 1;
         /* Ensure content takes up the available space, pushing the footer down */
     }

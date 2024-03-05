@@ -141,7 +141,7 @@
 </script>
 
 <Master>
-	<div class="container">
+	<div>
 		<div class="d-flex justify-content-between align-items-center pt-4 pb-3">
 			<div>
 				<h6 class="m-0">Providers</h6>
