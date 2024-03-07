@@ -7,11 +7,9 @@
 body {
     background-color: #F8F8F8;
     font-family: "Outfit", sans-serif;
+    overflow-x:hidden;
 }
 
-.row {
-    margin: 0;
-}
 
 a {
     color: inherit;
@@ -90,6 +88,9 @@ label {
     box-shadow: none;
     border: 1.4px solid var(--primary-color);
 }
+.form-control::placeholder{
+    color: #e1e1e1;
+}
 
 .form-label {
     margin-bottom: 0.2rem;
@@ -156,4 +157,25 @@ input[type="checkbox"] {
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
     background-color: rgba(0, 0, 0, 0.5);
+}
+.nav-pills {
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+}
+.nav-pills .nav-link {
+    color: #333333;
+}
+.nav-pills .nav-link.active{
+    background: #e1e1e1;
+    border-color: #e1e1e1;
+    color: #333333;
+}
+.dashed-border{
+    border: 1px dashed #e1e1e1;
+    border-radius: 10px;
+}
+.badge{
+    background-color: #eeffee;
+    color: #28bf3a;
+    font-weight: 500;
 }
