@@ -75,14 +75,10 @@ export class GenericRepo {
 				headers: {
 					'Content-Type': 'application/json',},
 			});
-
-			if (!response.ok) {
-				failed("Something went wrong!");
-			}
 			const data = await response.json();
 
 			if (data.status) {
-				success(data.message || "Success!")
+				success(data.message || "Successfully deleted!")
 			} else {
 				failed(data.message || 'Something went wrong'); // You might want to adjust based on your API's error handling
 			}

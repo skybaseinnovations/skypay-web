@@ -54,7 +54,7 @@
 			providers.set(list);
 			isLoading.set(false);
 		}, (message) => {
-			alert(message);
+			Snackbarrgh.error(message);
 			isLoading.set(false);
 		});
 	}
@@ -99,10 +99,11 @@
 			if (result.isConfirmed) {
 				isLoading.set(true);
 				repo.destroy(`${Api.PROVIDERS}/${id}`, (message) => {
+					Snackbarrgh.error(message);
 					load();
 					isLoading.set(false);
 				}, (message) => {
-					alert(message);
+					Snackbarrgh.error(message);
 					isLoading.set(false);
 				});
 			}

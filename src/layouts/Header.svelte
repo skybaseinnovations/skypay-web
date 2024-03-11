@@ -4,6 +4,7 @@
   import { AuthRepo } from '../repo/AuthRepo';
   import Swal from 'sweetalert2';
   import { goto } from '$app/navigation';
+  import { Snackbarrgh } from '../utils/Snackbarrgh.js';
 
   function logout(){
     Swal.fire({
@@ -20,7 +21,7 @@
         repo.logout(()=>{
           goto('/logout')
         }, (message)=>{
-          alert(message)
+          Snackbarrgh.success(message)
         })
       }
     });
