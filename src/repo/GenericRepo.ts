@@ -29,8 +29,8 @@ export class GenericRepo {
 
 			const response = await fetch(api, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',},
+				// headers: {
+				// 	'Accept': 'application/json',},
 				body: JSON.stringify(payload)
 			});
 
@@ -52,7 +52,7 @@ export class GenericRepo {
 			const response = await fetch(api, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json',},
+					'Accept': 'application/json',},
 				body: JSON.stringify(payload)
 			});
 
@@ -73,7 +73,7 @@ export class GenericRepo {
 			const response = await fetch(api, {
 				method: 'DELETE',
 				headers: {
-					'Content-Type': 'application/json',},
+					'Accept': 'application/json',},
 			});
 			const data = await response.json();
 

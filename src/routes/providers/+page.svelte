@@ -14,6 +14,7 @@
 	import { Snackbarrgh } from '../../utils/Snackbarrgh.js';
 	import SkySelect from '../../components/SkySelect.svelte';
 	import SkySwitch from '../../components/SkySwitch.svelte';
+	import SkyImageInput from '../../components/SkyImageInput.svelte';
 
 	let showModal = writable(false);
 	let repo = new GenericRepo();
@@ -33,7 +34,8 @@
 		signup_url: '',
 		api_version: '',
 		rating: null,
-		featured: false
+		featured: false,
+		image: null
 		// include other fields
 	};
 	let errors = {};
@@ -110,29 +112,44 @@
 		});
 	}
 
-	function save() {
-		isLoading.set(true);
-		if (formState.id != null) {
-			repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
-				closeModal();
-				load();
-				isLoading.set(false);
-			}, (message, e) => {
-				errors = e;
-				Snackbarrgh.error(message);
-				isLoading.set(false);
+	async function save() {
+		const formData = new FormData();
+		const fileInput = document.querySelector('input[type="file"]');
+		formData.append('image', fileInput.files[0]);
+
+		try {
+			const response = await fetch(`${Api.PROVIDERS}`, {
+				method: 'POST',
+				body: formData,
 			});
-		} else {
-			repo.store(`${Api.PROVIDERS}`, formState, (data) => {
-				closeModal();
-				load();
-				isLoading.set(false);
-			}, (message, e) => {
-				errors = e;
-				Snackbarrgh.error(message);
-				isLoading.set(false);
-			});
+			const result = await response.json();
+			console.log('Success:', result);
+		} catch (error) {
+			console.error('Error:', error);
 		}
+
+		// isLoading.set(true);
+		// if (formState.id != null) {
+		// 	repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
+		// 		closeModal();
+		// 		load();
+		// 		isLoading.set(false);
+		// 	}, (message, e) => {
+		// 		errors = e;
+		// 		Snackbarrgh.error(message);
+		// 		isLoading.set(false);
+		// 	});
+		// } else {
+		// 	repo.store(`${Api.PROVIDERS}`, formState, (data) => {
+		// 		closeModal();
+		// 		load();
+		// 		isLoading.set(false);
+		// 	}, (message, e) => {
+		// 		errors = e;
+		// 		Snackbarrgh.error(message);
+		// 		isLoading.set(false);
+		// 	});
+		// }
 
 	}
 
@@ -166,7 +183,7 @@
 
 			{#if !$isLoading && $providers.length === 0}
 				<div class="text-center d-flex justify-content-center align-items-center flex-column">
-					<img style="height: 25vh" src="illustrations/error.svg"/>
+					<img style="height: 25vh" src="illustrations/error.svg" />
 					<h6 class="mt-3">Oops!</h6>
 					<p class="my-0 text-muted">No providers available.</p>
 				</div>
@@ -186,8 +203,9 @@
 										<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
 									</svg>
 								</button>
-								<button class="border-0 btn text-danger bg-transparent d-flex align-items-center justify-content-center p-0"
-												on:click={() => deleteProvider(provider.id)}>
+								<button
+									class="border-0 btn text-danger bg-transparent d-flex align-items-center justify-content-center p-0"
+									on:click={() => deleteProvider(provider.id)}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
 											 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 											 class="feather feather-trash-2">
@@ -221,7 +239,8 @@
 				<div class="modal-content">
 					<div class="modal-header position-relative justify-content-center pt-4">
 						<h5 class="modal-title" id="editProviderModalLabel">Edit Provider</h5>
-						<button on:click={()=>closeModal()} type="button" class="close position-absolute border-0 top-50 end-0 translate-middle"
+						<button on:click={()=>closeModal()} type="button"
+										class="close position-absolute border-0 top-50 end-0 translate-middle"
 										data-dismiss="modal" aria-label="Close" style="padding-bottom: 0.2rem">
 							<span aria-hidden="true" class="m-0"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 																												viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -250,8 +269,13 @@
 																errors={errors.description} type="textarea" />
 								</div>
 								<div class="col-md-12">
-									<SkySelect placeholder="None" label="Integration Difficulty" id="integrationDifficulty" bind:value={formState.integration_difficulty}
+									<SkySelect placeholder="None" label="Integration Difficulty" id="integrationDifficulty"
+														 bind:value={formState.integration_difficulty}
 														 options={["Easy","Medium", "Hard"]} errors={errors.integration_difficulty} />
+								</div>
+								<div class="col-md-12">
+									<SkyImageInput value="s" placeholder="None" label="Logo" id="image"
+																 bind:input={formState.image} errors={errors.image} />
 								</div>
 								<div class="col-md-auto">
 									<SkySwitch label="Active" id="active" bind:checked={formState.status} />
