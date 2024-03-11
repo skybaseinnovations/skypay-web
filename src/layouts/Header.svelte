@@ -1,6 +1,6 @@
 <script>
   // Import any necessary functions or stores
-  import { isLoading, user } from '../stores';
+  import { isLoading, user, token } from '../stores';
   import { AuthRepo } from '../repo/AuthRepo';
   import Swal from 'sweetalert2';
   import { goto } from '$app/navigation';
@@ -38,7 +38,7 @@
     <li><a href="/">Home</a></li>
     <li><a href="/providers">Providers</a></li>
     {#if $user}
-      <li>Welcome, {$user?.name}!</li>
+      <li>Welcome, {$user.name}!</li>
       <li><a href="#" on:click="{()=>logout()}">Logout</a></li>
     {:else}
       <li><a href="/signin">Login</a></li>

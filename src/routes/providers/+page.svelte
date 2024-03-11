@@ -113,44 +113,28 @@
 	}
 
 	async function save() {
-		const formData = new FormData();
-		const fileInput = document.querySelector('input[type="file"]');
-		formData.append('image', fileInput.files[0]);
-
-		try {
-			const response = await fetch(`${Api.PROVIDERS}`, {
-				method: 'POST',
-				body: formData,
+		isLoading.set(true);
+		if (formState.id != null) {
+			repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
+				closeModal();
+				load();
+				isLoading.set(false);
+			}, (message, e) => {
+				errors = e;
+				Snackbarrgh.error(message);
+				isLoading.set(false);
 			});
-			const result = await response.json();
-			console.log('Success:', result);
-		} catch (error) {
-			console.error('Error:', error);
+		} else {
+			repo.store(`${Api.PROVIDERS}`, formState, (data) => {
+				closeModal();
+				load();
+				isLoading.set(false);
+			}, (message, e) => {
+				errors = e;
+				Snackbarrgh.error(message);
+				isLoading.set(false);
+			});
 		}
-
-		// isLoading.set(true);
-		// if (formState.id != null) {
-		// 	repo.update(`${Api.PROVIDERS}/${formState.id}`, formState, (list) => {
-		// 		closeModal();
-		// 		load();
-		// 		isLoading.set(false);
-		// 	}, (message, e) => {
-		// 		errors = e;
-		// 		Snackbarrgh.error(message);
-		// 		isLoading.set(false);
-		// 	});
-		// } else {
-		// 	repo.store(`${Api.PROVIDERS}`, formState, (data) => {
-		// 		closeModal();
-		// 		load();
-		// 		isLoading.set(false);
-		// 	}, (message, e) => {
-		// 		errors = e;
-		// 		Snackbarrgh.error(message);
-		// 		isLoading.set(false);
-		// 	});
-		// }
-
 	}
 
 	function create() {

@@ -2,11 +2,14 @@
 export class GenericRepo {
 	async list(api: string, filter: string, success: (data: any) => void, failed: (message: string) => void) {
 		try {
-
+			const token = JSON.parse(localStorage.getItem('token')??'');
 			const response = await fetch(api, {
 				method: 'GET',
 				headers: {
-					'Content-Type': 'application/json',},
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,
+				},
 			});
 
 			if (!response.ok) {
@@ -26,11 +29,14 @@ export class GenericRepo {
 
 	async store(api: string, payload: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
-
+			const token = JSON.parse(localStorage.getItem('token')??'');
 			const response = await fetch(api, {
 				method: 'POST',
-				// headers: {
-				// 	'Accept': 'application/json',},
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,
+				},
 				body: JSON.stringify(payload)
 			});
 
@@ -48,11 +54,12 @@ export class GenericRepo {
 
 	async update(api: string, payload: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
-
+			const token = JSON.parse(localStorage.getItem('token')??'');
 			const response = await fetch(api, {
 				method: 'PATCH',
 				headers: {
-					'Accept': 'application/json',},
+					'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,},
 				body: JSON.stringify(payload)
 			});
 
@@ -69,11 +76,11 @@ export class GenericRepo {
 	}
 	async destroy(api: string, success: (message: string) => void, failed: (message: string) => void) {
 		try {
-
+			const token = JSON.parse(localStorage.getItem('token')??'');
 			const response = await fetch(api, {
 				method: 'DELETE',
 				headers: {
-					'Accept': 'application/json',},
+					'Accept': 'application/json','Authorization': `Bearer ${token.access_token}`,},
 			});
 			const data = await response.json();
 

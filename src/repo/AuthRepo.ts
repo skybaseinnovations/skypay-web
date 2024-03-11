@@ -8,18 +8,21 @@ export class AuthRepo {
 			const response = await fetch(Api.SIGNIN, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
 				},
 				body: JSON.stringify({ email, password })
 			});
 			const data = await response.json();
 
 			if (data.status) {
+				localStorage.setItem('user', JSON.stringify(data.data.user));
+				localStorage.setItem('token', JSON.stringify(data.data.token));
+
 				user.set(data.data.user);
 				token.set(data.data.token);
 
-				localStorage.setItem('user', JSON.stringify(data.data.user));
-				localStorage.setItem('token', data.data.token);
+
 				await this.authenticate(data.data.user, data.data.token)
 				success(data.data.user);
 			} else {
@@ -70,7 +73,7 @@ export class AuthRepo {
 				token.set(data.data.token);
 
 				localStorage.setItem('user', JSON.stringify(data.data.user));
-				localStorage.setItem('token', data.data.token);
+				localStorage.setItem('token', JSON.stringify(data.data.token));
 
 				success(data.data.user);
 			} else {

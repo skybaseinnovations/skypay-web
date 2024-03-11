@@ -16,7 +16,7 @@
 		const storedToken = localStorage.getItem('token');
 		if (storedUser && storedToken) {
 			user.set(JSON.parse(storedUser));
-			token.set(JSON.parse(storedUser));
+			token.set(JSON.parse(storedToken));
 		}
 	});
 </script>
