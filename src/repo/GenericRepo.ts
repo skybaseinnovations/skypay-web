@@ -58,6 +58,7 @@ export class GenericRepo {
 			const response = await fetch(api, {
 				method: 'PATCH',
 				headers: {
+					'Content-Type': 'application/json',
 					'Accept': 'application/json',
 					'Authorization': `Bearer ${token.access_token}`,},
 				body: JSON.stringify(payload)

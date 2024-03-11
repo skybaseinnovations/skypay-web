@@ -202,7 +202,7 @@
 							</div>
 							<div class="provider-item pt-4">
 								<div class="d-flex flex-column gap-1 justify-content-center align-items-center">
-									<img src="" height="80" width="80" class="object-fit-contain" alt="">
+									<img src="{provider.logo_url}" height="80" width="80" class="object-fit-contain" alt="">
 									<h6>{provider.name}</h6>
 								</div>
 							</div>
