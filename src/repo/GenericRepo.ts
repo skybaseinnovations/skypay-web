@@ -1,3 +1,6 @@
+import { AuthRepo } from './AuthRepo';
+import { goto } from '$app/navigation';
+import { Snackbarrgh } from '../utils/Snackbarrgh';
 
 export class GenericRepo {
 	async list(api: string, filter: string, success: (data: any) => void, failed: (message: string) => void) {
@@ -11,6 +14,15 @@ export class GenericRepo {
 					'Authorization': `Bearer ${token.access_token}`,
 				},
 			});
+
+			if (response.status === 401) {
+				await new AuthRepo().logout(()=>{
+					goto('/logout')
+					return;
+				}, (message)=>{
+				})
+				return;
+			}
 
 			if (!response.ok) {
 				failed("Something went wrong!");

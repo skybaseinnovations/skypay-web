@@ -8,6 +8,7 @@
 	import '/src/styles/global.css';
 	import { user, token, isLoading } from '../stores';
 	import { goto } from '$app/navigation';
+	import { AuthRepo } from '../repo/AuthRepo';
 
 	var mounted = false;
 	onMount(async () => {
@@ -17,6 +18,13 @@
 		if (storedUser && storedToken) {
 			user.set(JSON.parse(storedUser));
 			token.set(JSON.parse(storedToken));
+		} else {
+		// 	await new AuthRepo().logout(() => {
+		// 		goto('/logout');
+		// 		return;
+		// 	}, (message) => {
+		// 	});
+		// 	return;
 		}
 	});
 </script>
@@ -33,19 +41,19 @@
 	{#if mounted}
 		{#if $isLoading}
 			<div class="loading-overlay"></div>
-		<div class="loading-box">
-			<LottiePlayer
-				src="loading.json"
-				autoplay="{true}"
-				loop="{true}"
-				controls="{false}"
-				renderer="svg"
-				background="transparent"
-				height="{64}"
-				width="{64}"
-			/>
-			<p class="text-dark text-center m-0">Loading</p>
-		</div>
+			<div class="loading-box">
+				<LottiePlayer
+					src="loading.json"
+					autoplay="{true}"
+					loop="{true}"
+					controls="{false}"
+					renderer="svg"
+					background="transparent"
+					height="{64}"
+					width="{64}"
+				/>
+				<p class="text-dark text-center m-0">Loading</p>
+			</div>
 		{/if}
 	{/if}
 </div>
