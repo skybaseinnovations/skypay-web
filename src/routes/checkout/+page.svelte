@@ -5,6 +5,7 @@
 	import { CheckoutRepo } from '../../repo/CheckoutRepo';
 	import { activePayment, providers, selectedProvider, isLoading } from '../../checkout-stores';
 	import ProviderList from './ProviderList.svelte';
+	import { goto } from '$app/navigation';
 	let repo = new CheckoutRepo();
 	let data = {};
 	let baseInfo = {
@@ -31,6 +32,10 @@
 		params.forEach((value, key) => {
 			baseInfo[key] = value;
 		})
+		if(baseInfo.amount <10){
+			Snackbarrgh.error("Amount must be greater than Rs. 10")
+			goto('/failure?message=Amount must be greater than Rs. 10')
+		}
 		load()
 	});
 
