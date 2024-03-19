@@ -37,6 +37,7 @@
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
     <li><a href="/providers">Providers</a></li>
+    <li><a href="/payments">Payments</a></li>
     <li><a href="/payment-providers">My Payment Providers</a></li>
     {#if $user}
       <li>Welcome, {$user.name}!</li>

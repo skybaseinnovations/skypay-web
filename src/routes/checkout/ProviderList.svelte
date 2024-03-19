@@ -1,10 +1,10 @@
 <script>
-	import { isLoading, providers, selectedProvider } from '../../checkout-stores';
+	import { apiKey, isLoading, providers, selectedProvider } from '../../checkout-stores';
 	import { onMount } from 'svelte';
 	import { Snackbarrgh } from '../../utils/Snackbarrgh.js';
 	import { CheckoutRepo } from '../../repo/CheckoutRepo';
 
-	let repo = new CheckoutRepo();
+	let repo = new CheckoutRepo($apiKey);
 
 	function load() {
 		isLoading.set(true);

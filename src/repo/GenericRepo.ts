@@ -3,7 +3,7 @@ import { goto } from '$app/navigation';
 import { Snackbarrgh } from '../utils/Snackbarrgh';
 
 export class GenericRepo {
-	async list(api: string, filter: string, success: (data: any) => void, failed: (message: string) => void) {
+	async list(api: string, filter: string | null, success: (data: any) => void, failed: (message: string) => void) {
 		try {
 			const token = JSON.parse(localStorage.getItem('token')??'');
 			const response = await fetch(api, {
