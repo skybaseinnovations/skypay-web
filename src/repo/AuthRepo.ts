@@ -1,5 +1,5 @@
 import { Api } from '../utils/Api';
-import {  token, user } from '../stores';
+import { token, user } from '../stores';
 
 export class AuthRepo {
 	async login(email: string, password: string, success: (user: any) => void, failed: (message: string) => void) {
@@ -33,8 +33,8 @@ export class AuthRepo {
 		}
 	}
 
-	async authenticate(user: any , token: any) {
-		const response = await fetch('api/authenticate',{
+	async authenticate(user: any, token: any) {
+		const response = await fetch('api/authenticate', {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json',
@@ -46,7 +46,7 @@ export class AuthRepo {
 			})
 		});
 		const data = await response.json();
-		if(data.status){
+		if (data.status) {
 			console.log(`BACK TO OK-->${JSON.stringify(data)}`);
 		}
 	}
@@ -99,8 +99,8 @@ export class AuthRepo {
 
 	async generateApiKey(success: (user: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
-			const token = JSON.parse(localStorage.getItem('token')??'');
-			
+			const token = JSON.parse(localStorage.getItem('token') ?? '');
+
 			const response = await fetch(Api.GENERATE_API_KEY, {
 				method: 'GET',
 				headers: {
@@ -127,4 +127,40 @@ export class AuthRepo {
 			failed(error.message, {}); // Invoke the failed callback with the error message
 		}
 	}
+	async updateUserProfile(formData: FormData,success: (user: any) => void, failed: (message: string, errors: {}) => void) {
+		try {
+			const token = JSON.parse(localStorage.getItem('token') ?? '');
+
+			const response = await fetch(Api.UPDATE_PROFILE, {
+				method: 'POST',
+				headers: {
+					// 'Content-Type': 'application/json',
+					// 'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,
+				},
+				body: formData, // Form data containing user profile updates and image file
+			});
+
+			if (!response.ok) {
+				failed('Something went wrong during profile update', {});
+				return;
+			}
+
+			const data = await response.json();
+
+			if (data.status) {
+				// Update user store with updated profile data
+				user.set(data.data);
+				localStorage.setItem('user', JSON.stringify(data.data));
+
+				success(data.data);
+			} else {
+				failed(data.message || 'Something went wrong during profile update', data.errors || {});
+			}
+		} catch (error) {
+			failed(error.message || 'Something went wrong during profile update', {});
+		}
+	}
+
+
 }
