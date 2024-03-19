@@ -41,6 +41,7 @@
     <li><a href="/payment-providers">My Payment Providers</a></li>
     {#if $user}
       <li>Welcome, {$user.name}!</li>
+      <li><a href="/profile">Profile</a></li>
       <li><a href="#" on:click="{()=>logout()}">Logout</a></li>
     {:else}
       <li><a href="/signin">Login</a></li>

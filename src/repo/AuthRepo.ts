@@ -96,4 +96,35 @@ export class AuthRepo {
 			failed(error.message); // Invoke the failed callback with the error message
 		}
 	}
+
+	async generateApiKey(success: (user: any) => void, failed: (message: string, errors: {}) => void) {
+		try {
+			const token = JSON.parse(localStorage.getItem('token')??'');
+			
+			const response = await fetch(Api.GENERATE_API_KEY, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,
+				},
+			});
+
+			if (!response.ok) {
+				failed('Something went wrong!', {});
+			}
+			const data = await response.json();
+
+			if (data.status) {
+				user.set(data.data);
+				localStorage.setItem('user', JSON.stringify(data.data));
+
+				success(data.data);
+			} else {
+				failed(data.message || 'Something went wrong during signin', data.errors); // You might want to adjust based on your API's error handling
+			}
+		} catch (error: any) {
+			failed(error.message, {}); // Invoke the failed callback with the error message
+		}
+	}
 }
