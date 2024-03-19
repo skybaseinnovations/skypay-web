@@ -1,9 +1,9 @@
 import { CheckoutApi } from '../utils/CheckoutApi';
 
 export class CheckoutRepo {
-	async providers(success: (data: any) => void, failed: (message: string) => void) {
+	async providers(apiKey: string, success: (data: any) => void, failed: (message: string) => void) {
 		try {
-			const response = await fetch(`${CheckoutApi.PAYMENT_PROVIDERS}/002`, {
+			const response = await fetch(`${CheckoutApi.PAYMENT_PROVIDERS}/${apiKey}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
