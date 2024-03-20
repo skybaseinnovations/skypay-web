@@ -37,10 +37,10 @@
 	$: if ($activePayment) {
 		if ($activePayment.status === 'Cancelled') {
 			stopCalled = true;
-			goto('failure');
+			goto('checkout/failure');
 		} else if ($activePayment.status === 'Paid') {
 			stopCalled = true;
-			goto('success');
+			goto('checkout/success');
 		}
 	}
 
@@ -72,7 +72,7 @@
 	 */
 	function handleError(message) {
 		Snackbarrgh.error(message);
-		goto('/failure?message=' + encodeURIComponent(message));
+		goto('/checkout/failure?message=' + encodeURIComponent(message));
 	}
 
 	function initiate() {

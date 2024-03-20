@@ -72,6 +72,12 @@
 			<p>Email: {$user?.email}</p>
 			<p>Phone: {$user?.phone}</p>
 			<p>API Key: {$user?.api_key ?? 'Not set. Please contact admin'}</p>
+			<hr>
+			<div class="row">
+				<p>Check Sample Payment</p>
+				<a target="_blank" href="checkout?api_key={$user?.api_key}&amount=220">Pay Rs. 10 with SkyPay</a>
+			</div>
+			<hr>
 		</div>
 	</div>
 
