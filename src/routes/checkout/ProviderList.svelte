@@ -28,20 +28,24 @@
 	}
 </script>
 
-<div>
-	{#each $providers as provider (provider.id)}
-		<div class="col-md-6">
+<div class="row d-flex align-items-center flex-column pt-4">
+	<h5 class="text-center">Choose Payment Provider</h5>
+
+	<div class="">
+		{#each $providers as provider (provider.id)}
 			<label for="{provider.id}"
 						 class="d-flex justify-content-between dashed-border {$selectedProvider === provider.id ? 'active' : ''} py-3 px-4 mt-3"
 						 style="cursor: pointer;">
 				<div class="d-flex gap-2">
-					<img src="{provider.provider_logo_url}" width="24" height="24" class="object-fit-contain" alt="{provider.provider_name}">
+					<img src="{provider.provider_logo_url}" width="24" height="24" class="object-fit-contain"
+							 alt="{provider.provider_name}">
 					<span>{provider.provider_name}</span>
 					<div class="badge badge-primary">{provider.mode}</div>
 				</div>
 				<input on:change={() => selectProvider(provider.id)} name="provider_id" type="radio"
 							 class="form-check-input" id="{provider.id}" value="{provider.id}">
 			</label>
-		</div>
-	{/each}
+		{/each}
+	</div>
+
 </div>

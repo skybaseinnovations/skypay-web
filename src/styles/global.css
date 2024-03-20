@@ -208,3 +208,7 @@ input[type="checkbox"] {
     color: #28bf3a;
     font-weight: 500;
 }
+.bg-signin p{
+    font-weight: 300;
+    font-size: 0.8rem;
+}

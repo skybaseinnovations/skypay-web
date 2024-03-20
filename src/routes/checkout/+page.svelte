@@ -12,6 +12,7 @@
 	} from '../../checkout-stores';
 	import ProviderList from './ProviderList.svelte';
 	import { goto } from '$app/navigation';
+
 	let repo = new CheckoutRepo(null);
 	let stopCalled = false;
 	let data = {};
@@ -149,50 +150,63 @@
 </script>
 
 <CheckoutMaster>
-	<div>
-		{#if $selectedProvider}
-			<p>{$selectedProvider.provider_name}</p>
-		{/if}
-		{#if !$activePayment || !$selectedProvider}
-			{#if $apiKey}
-				<ProviderList />
+	<div class="row d-flex justify-content-center">
+		<div class="col-md-6 card p-3 mt-4">
+			<!--{#if $selectedProvider}-->
+			<!--	<p>{$selectedProvider.provider_name}</p>-->
+			<!--{/if}-->
+			{#if !$activePayment || !$selectedProvider}
+				{#if $apiKey}
+					<ProviderList />
+				{/if}
+
+
 			{/if}
-		{:else}
-			<button
-				class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
-				on:click={() => changeProvider()}
-			>
-				Change Provider
-			</button>
-		{/if}
-		<div class="d-flex justify-content-between align-items-center pt-4 pb-3">
-			<div>
-				<h6 class="m-0">My Payment Providers</h6>
-			</div>
-			{#if $activePayment}
-				<p class="m-0 text-muted">{$activePayment.id}|{$activePayment.status}</p>
+			<div class="d-flex flex-column pt-4 pb-3 gap-2">
 				<div>
-					<button
-						class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
-						on:click={() => changeStatus('Waiting')}
-					>
-						Mark as Paid
-					</button>
-					<button
-						class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
-						on:click={() => changeStatus('Cancelled')}
-					>
-						Mark as Cancelled
-					</button>
+					<h6 class="m-0">My Payment Providers</h6>
 				</div>
-			{:else}
-				<button
-					class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
-					on:click={() => initiate()}
-				>
-					Proceed to Pay
-				</button>
-			{/if}
+				{#if $activePayment}
+					<div class="d-flex flex-column gap-2">
+						<p class="m-0 text-muted">{$activePayment.id}|{$activePayment.status}</p>
+						<div class='d-flex justify-content-between'>
+							<div>
+							{#if $activePayment && $selectedProvider}
+
+								<button
+									class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
+									on:click={() => changeProvider()}
+								>
+									Change Provider
+								</button>
+							{/if}
+						</div>
+							<div class="d-flex gap-2 justify-content-end">
+								<button
+									class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-1"
+									on:click={() => changeStatus('Cancelled')}
+								>
+									Mark as Cancelled
+								</button>
+								<button
+									class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
+									on:click={() => changeStatus('Waiting')}
+								>
+									Mark as Paid
+								</button>
+							</div>
+						</div>
+					</div>
+				{:else}
+					<button
+						class="btn btn-primary d-flex align-items-center justify-content-center gap-1"
+						on:click={() => initiate()}
+					>
+						Proceed to Pay
+					</button>
+				{/if}
+			</div>
 		</div>
+
 	</div>
 </CheckoutMaster>

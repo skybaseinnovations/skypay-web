@@ -30,11 +30,11 @@
 		let authRepo = new AuthRepo();
 		authRepo.login(email, password, function(userData) {
 			isLoading.set(false);
-			Snackbarrgh.success(`Welcome back, ${userData.name}`)
+			Snackbarrgh.success(`Welcome back, ${userData.name}`);
 			goto('/', { replaceState: true });
 		}, function(message) {
 			isLoading.set(false);
-			Snackbarrgh.error(message)
+			Snackbarrgh.error(message);
 		});
 	}
 </script>
@@ -42,9 +42,15 @@
 <AuthMaster>
 	<div class="">
 		<div class="row">
-			<div class="col-md-6 h-full bg-black">
-
-
+			<div class="col-md-6 h-full bg-signin text-center text-white p-5 gap-2">
+				<img src="auth-screens.png" alt="" class="w-50">
+				<h3>
+					Unify Your Payments, Amplify Your Savings
+				</h3>
+				<p>
+					Discover a smarter way to manage your merchant accounts. With our platform, one login gives you
+					access to multiple payment platforms without the cost of transaction and API fees.
+				</p>
 			</div>
 			<div class="col-md-6 h-full d-flex flex-column justify-content-center align-items-center">
 				<div class="text-center">
@@ -71,3 +77,13 @@
 		</div>
 	</div>
 </AuthMaster>
+<style>
+    .bg-signin {
+        background: url(/auth-bg.png) no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>

@@ -3,11 +3,12 @@
 	import { AuthRepo } from '../../repo/AuthRepo';
 	import { goto } from '$app/navigation';
 	import { isLoading } from '../../stores';
-	import '../../utils/Snackbarrgh'
+	import '../../utils/Snackbarrgh';
 	import AuthMaster from '../../layouts/AuthMaster.svelte';
 	import { Snackbarrgh } from '../../utils/Snackbarrgh.js';
 	import SkyTextInput from '../../components/SkyTextInput.svelte';
 	import SkySelect from '../../components/SkySelect.svelte';
+
 	let countryCode = '+977'; // Default country code
 	let name = '';
 	let email = '';
@@ -21,7 +22,7 @@
 		{ name: 'Nepal', code: '+977' },
 		{ name: 'India', code: '+91' }
 	];
-	const businessTypes = ['Software', 'Hardware', 'Services', 'Consulting','Others'];
+	const businessTypes = ['Software', 'Hardware', 'Services', 'Consulting', 'Others'];
 	let errors = {};
 
 	const defaultPattern = '{3,255}$';
@@ -46,8 +47,8 @@
 		// 	errors.businessType = ['Business type must be selected.'];
 		// }
 
-		if (!terms ) {
-			Snackbarrgh.error("Please accept the terms to continue!")
+		if (!terms) {
+			Snackbarrgh.error('Please accept the terms to continue!');
 			return false;
 		}
 		return Object.keys(errors).length === 0; // True if no errors
@@ -59,12 +60,12 @@
 			let authRepo = new AuthRepo();
 			authRepo.signup(email, password, `${countryCode} ${phone}`, name, businessType, businessName, function(user) {
 				isLoading.set(false);
-				Snackbarrgh.success(`Welcome back, ${user.name}`)
+				Snackbarrgh.success(`Welcome back, ${user.name}`);
 				goto('/home', { replaceState: true });
 			}, function(message, e) {
 				errors = e;
 				isLoading.set(false);
-				Snackbarrgh.error(message)
+				Snackbarrgh.error(message);
 			});
 		} else {
 			console.log('Validation errors:', errors);
@@ -75,9 +76,15 @@
 <AuthMaster>
 	<div class="">
 		<div class="row">
-			<div class="col-md-6 h-full bg-black">
-
-
+			<div class="col-md-6 h-full bg-signin text-center text-white p-5 gap-2">
+				<img src="auth-screens.png" alt="" class="w-50">
+				<h3>
+					Unify Your Payments, Amplify Your Savings
+				</h3>
+				<p>
+					Discover a smarter way to manage your merchant accounts. With our platform, one login gives you
+					access to multiple payment platforms without the cost of transaction and API fees.
+				</p>
 			</div>
 			<div class="col-md-6 d-flex flex-column justify-content-center align-items-center"
 					 style="overflow-y: scroll;max-height: 100vh">
@@ -154,3 +161,14 @@
 	</div>
 
 </AuthMaster>
+<style>
+    .bg-signin {
+        background: url(/auth-bg.png) no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+</style>
