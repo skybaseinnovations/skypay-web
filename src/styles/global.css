@@ -51,6 +51,19 @@ a {
     border: 1px solid var(--primary-color);
 }
 
+.btn-tertiary {
+    background: #042948;
+    color: #ffffff;
+    padding: 0.6rem;
+}
+
+.btn-tertiary:hover {
+    border: 1px solid #042948;
+    background: transparent;
+    color: #042948;
+    padding: 0.6rem;
+}
+
 .btn-primary svg, .update-profile-label svg {
     fill: white;
 }
@@ -208,7 +221,48 @@ input[type="checkbox"] {
     color: #28bf3a;
     font-weight: 500;
 }
-.bg-signin p{
+
+.bg-signin p {
     font-weight: 300;
     font-size: 0.8rem;
+}
+
+.card-01 {
+    border: 2px solid #F3F3F3;
+    border-radius: 10px;
+}
+
+.payment-type {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #585676;
+    background: #efeff2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.provider-label {
+    color: #000000;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+
+.footer-links a {
+    color: #636363;
+}
+
+.border-left{
+    border-left: 1px solid #eaeaea;
+}
+
+.info-payment{
+    color: #8E8E8E;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.personal-details-table tr td{
+    color: #042948;
+    font-weight: 600;
 }
