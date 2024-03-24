@@ -125,26 +125,26 @@
 								<td>{payment.status}</td>
 								<td>{payment.created_at}</td>
 								<td>
-									{#if payment.status === 'Pending' || payment.status === 'Waiting'}
+									{#if payment.status === 'pending' || payment.status === 'waiting'}
 										<button
 											class="btn btn-danger"
-											on:click={() => updateStatus(payment, 'Cancelled')}
+											on:click={() => updateStatus(payment, 'cancelled')}
 										>
 											Cancel
 										</button>
 										<button
 											class="btn btn-danger"
-											on:click={() => updateStatus(payment, 'Invalid')}
+											on:click={() => updateStatus(payment, 'invalid')}
 										>
 											Invalid
 										</button>
-										<button class="btn btn-success" on:click={() => updateStatus(payment, 'Paid')}>
+										<button class="btn btn-success" on:click={() => updateStatus(payment, 'complete')}>
 											Mark Paid
 										</button>
-									{:else if payment.status === 'Paid' || payment.status === 'Cancelled'}
+									{:else if payment.status === 'Paid' || payment.status === 'cancelled'}
 										<button
 											class="btn btn-danger"
-											on:click={() => updateStatus(payment, 'Invalid')}
+											on:click={() => updateStatus(payment, 'invalid')}
 										>
 											Invalid
 										</button>

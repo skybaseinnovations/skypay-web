@@ -1,6 +1,4 @@
 <script>
-
-	import Footer from './Footer.svelte';
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { onMount } from 'svelte';
 	import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,8 +17,6 @@
 		<!-- Your page content goes here -->
 		<slot></slot>
 	</div>
-
-	<Footer />
 	{#if mounted}
 		{#if $isLoading}
 			<div class="loading-overlay"></div>

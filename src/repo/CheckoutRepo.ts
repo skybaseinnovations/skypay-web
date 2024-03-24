@@ -108,4 +108,29 @@ export class CheckoutRepo {
 			failed(error.message, {}); // Invoke the failed callback with the error message
 		}
 	}
+
+	async process(payload: any): Promise<any> {
+		try {
+		  console.log(payload);
+		  const response = await fetch(`${CheckoutApi.VERIFY}`, {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			  'Accept': 'application/json',
+			},
+			body: JSON.stringify(payload)
+		  });
+	
+		  const data = await response.json();
+	
+		  if (data.status) {
+			return data.data; // Resolve the promise with data on success
+		  } else {
+			throw new Error(data.message || 'Something went wrong'); // Reject the promise with an error message on failure
+		  }
+		} catch (error: any) {
+		  console.error('Fetch error:', error.message);
+		  throw error; // Rethrow or create a new Error instance to reject the promise
+		}
+	  }
 }

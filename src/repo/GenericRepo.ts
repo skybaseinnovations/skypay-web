@@ -64,6 +64,31 @@ export class GenericRepo {
 		}
 	}
 
+	async storeForm(api: string, formData: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
+		try {
+			const token = JSON.parse(localStorage.getItem('token')??'');
+			const response = await fetch(api, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,
+				},
+				body: formData
+			});
+
+			const data = await response.json();
+
+			if (data.status) {
+				success(data.data)
+			} else {
+				failed(data.message || 'Something went wrong',data.errors); // You might want to adjust based on your API's error handling
+			}
+		} catch (error: any) {
+			failed(error.message,{}); // Invoke the failed callback with the error message
+		}
+	}
+
+
 	async update(api: string, payload: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
 		try {
 			const token = JSON.parse(localStorage.getItem('token')??'');
@@ -87,6 +112,30 @@ export class GenericRepo {
 			failed(error.message,{}); // Invoke the failed callback with the error message
 		}
 	}
+
+	async updateForm(api: string, formData: any, success: (data: any) => void, failed: (message: string, errors: {}) => void) {
+		try {
+			const token = JSON.parse(localStorage.getItem('token')??'');
+			const response = await fetch(api, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Authorization': `Bearer ${token.access_token}`,},
+				body: formData
+			});
+
+			const data = await response.json();
+
+			if (data.status) {
+				success(data.data)
+			} else {
+				failed(data.message || 'Something went wrong',data.errors); // You might want to adjust based on your API's error handling
+			}
+		} catch (error: any) {
+			failed(error.message,{}); // Invoke the failed callback with the error message
+		}
+	}
+
 	async destroy(api: string, success: (message: string) => void, failed: (message: string) => void) {
 		try {
 			const token = JSON.parse(localStorage.getItem('token')??'');
