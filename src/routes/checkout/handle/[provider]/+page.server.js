@@ -55,3 +55,4 @@ export async function load({ params, url }) {
   }
 
 }
+export const prerender = 'auto'
