@@ -51,7 +51,7 @@
 		const apiKeyValue = params.get('api_key');
 		const amount = parseFloat(params.get('amount') || 0);
 
-		if (!apiKeyValue || apiKeyValue == "null") {
+		if (!apiKeyValue || apiKeyValue == 'null') {
 			handleError('Api key is required!');
 			return;
 		}
@@ -83,7 +83,11 @@
 			(p) => {
 				isLoading.set(false);
 				if (p.mode === 'API') {
-					goto('/checkout/process/esewa');
+					if (p.provider_code === 'khalti') {
+						window.location.href = p.process_data.url;
+					} else {
+						goto('/checkout/process/generic');
+					}
 					activePayment.set(p);
 				} else {
 					activePayment.set(p);

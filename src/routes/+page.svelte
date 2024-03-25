@@ -47,7 +47,7 @@
 		<hr />
 		<div class="row">
 			<p>Check Sample Payment</p>
-			<a target="_blank" href="checkout?api_key={$user?.api_key}&amount=220"
+			<a target="_blank" href="checkout?api_key={$user?.api_key}&amount=10"
 				>Pay Rs. 10 with SkyPay <svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
